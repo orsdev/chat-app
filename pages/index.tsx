@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Flex, ModalOverlay } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Messages from "@/components/Messages";
 import Footer from "@/components/Footer";
 import PromptUser from "@/components/PromptUser";
