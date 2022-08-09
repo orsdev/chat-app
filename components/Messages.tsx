@@ -1,6 +1,10 @@
 import { MessageState } from "@/redux/slices/chatSlice";
 import { useAppSelector } from "@/redux/store";
 import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const Messages = () => {
   const { messages } = useAppSelector((state) => state.chats);
@@ -30,13 +34,24 @@ const Messages = () => {
             key={idx + chat.message}
             justifyContent={username === chat.from ? "flex-end" : "flex-start"}
           >
-            <Stack direction="row">
-              <Avatar icon={<></>}>
-                <Text fontSize="11px">
-                  {username === chat.from ? "You" : chat.from}
-                </Text>
-              </Avatar>
-            </Stack>
+            {username !== chat.from && (
+              <Stack direction="row">
+                <Avatar icon={<></>} size="lg">
+                  <Text fontSize="11px" wordBreak="break-all" lineHeight="100%">
+                    {chat.from}
+                  </Text>
+                </Avatar>
+              </Stack>
+            )}
+            {username === chat.from && (
+              <Stack direction="row">
+                <Avatar size="lg" bg="teal.700" icon={<></>}>
+                  <Text fontSize="11px" color="white" wordBreak="break-all">
+                    You
+                  </Text>
+                </Avatar>
+              </Stack>
+            )}
             <Box
               bg={username === chat.from ? "wheat" : "blue.600"}
               color={username === chat.from ? "black" : "white"}
@@ -44,18 +59,18 @@ const Messages = () => {
               py={1.5}
               maxW="250px"
               borderRadius="10px"
-              borderTopRadius={username === chat.from ? 0 : "10px"}
-              borderBottomRightRadius={username === chat.from ? "10px" : 0}
+              borderBottomRightRadius={username === chat.from ? 0 : "10px"}
+              borderTopLeftRadius={username === chat.from ? "10px" : 0}
             >
               <Text>{chat.message}</Text>
             </Box>
             <Text
               ml="5px"
               alignSelf="flex-end"
-              fontSize="15px"
+              fontSize="12px"
               color="gray.400"
             >
-              15:55
+              {dayjs().to(chat.date)}
             </Text>
           </Flex>
         ))}
