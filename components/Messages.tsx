@@ -3,12 +3,23 @@ import { useAppSelector } from "@/redux/store";
 import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useEffect, useRef } from "react";
 
 dayjs.extend(relativeTime);
 
 const Messages = () => {
   const { messages } = useAppSelector((state) => state.chats);
   const { username } = useAppSelector((state) => state.username);
+  const BoxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (BoxRef.current) {
+      BoxRef.current.scroll({
+        top: BoxRef.current.scrollHeight + 30,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
   return (
     <Box
@@ -16,6 +27,7 @@ const Messages = () => {
       px={6}
       flex={1}
       overflow="auto"
+      ref={BoxRef}
       __css={{
         "&::-webkit-scrollbar": {
           width: "5px",
