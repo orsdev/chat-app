@@ -3,7 +3,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import Messages from "@/components/Messages";
 import Footer from "@/components/Footer";
 import PromptUser from "@/components/PromptUser";
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { MessageState } from "@/redux/slices/chatSlice";
 import { saveMessage } from "@/redux/slices/chatSlice";
@@ -23,9 +23,7 @@ export default function Home() {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target as HTMLTextAreaElement;
 
-    if (value.trim()) {
-      setInputValue(value);
-    }
+    setInputValue(value);
   };
 
   const handleSubmit = () => {
@@ -57,29 +55,31 @@ export default function Home() {
   }
 
   return (
-    <Box>
-      <Head>
-        <title>Chat App</title>
-      </Head>
-      <Box py="56px" px={{ base: 3, sm: 6 }}>
-        <Flex
-          border="2px solid"
-          borderColor="blue.600"
-          h="500px"
-          borderRadius="10px"
-          overflow="hidden"
-          display="flex"
-          flexDir="column"
-          py={1}
-        >
-          <Messages />
-          <Footer
-            value={inputValue}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />
-        </Flex>
+    <>
+      <Box>
+        <Head>
+          <title>Chat App</title>
+        </Head>
+        <Box py="56px" px={{ base: 3, sm: 6 }}>
+          <Flex
+            border="2px solid"
+            borderColor="blue.600"
+            h="500px"
+            borderRadius="10px"
+            overflow="hidden"
+            display="flex"
+            flexDir="column"
+            py={1}
+          >
+            <Messages />
+            <Footer
+              value={inputValue}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+            />
+          </Flex>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
