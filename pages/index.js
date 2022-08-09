@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Box, Flex } from "@chakra-ui/react";
 import Messages from "@/components/Messages";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
           py={1}
         >
           <Messages />
+          <Footer />
         </Flex>
       </Box>
     </Box>
