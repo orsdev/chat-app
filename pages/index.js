@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Box, Flex } from "@chakra-ui/react";
 import Messages from "@/components/Messages";
 import Footer from "@/components/Footer";
+import PromptUser from "@/components/PromptUser";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Head>
         <title>Chat App</title>
       </Head>
+      <PromptUser />
       <Box py="56px" px={{ base: 3, sm: 6 }}>
         <Flex
           border="2px solid"
