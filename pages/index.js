@@ -8,11 +8,7 @@ export default function Home() {
       <Head>
         <title>Chat App</title>
       </Head>
-      <Box
-        py="56px"
-        px={{ base: 3, sm: 6 }}
-        bg={{ base: "white", md: "transparent" }}
-      >
+      <Box py="56px" px={{ base: 3, sm: 6 }}>
         <Flex
           border="2px solid"
           borderColor="blue.600"
