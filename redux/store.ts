@@ -12,6 +12,7 @@ import rootReducer, { RootState } from "./rootReducer";
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ['chats']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
