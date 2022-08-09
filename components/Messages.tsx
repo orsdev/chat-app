@@ -1,17 +1,24 @@
 import { MessageState } from "@/redux/slices/chatSlice";
 import { useAppSelector } from "@/redux/store";
-import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Spinner, Stack, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 
 dayjs.extend(relativeTime);
+
+const PAGE_SIZE = 25;
 
 const Messages = () => {
   const { messages } = useAppSelector((state) => state.chats);
   const { username } = useAppSelector((state) => state.username);
+  const [currentPage, setCurrentPage] = useState(-Math.abs(PAGE_SIZE));
   const BoxRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Scroll new messages into view
+   */
   useEffect(() => {
     if (BoxRef.current) {
       BoxRef.current.scroll({
@@ -38,8 +45,25 @@ const Messages = () => {
         },
       }}
     >
-      {messages &&
-        messages.map((chat: MessageState, idx: number) => (
+      <InfiniteScroll
+        loadMore={() => {
+          if (currentPage > -Math.abs(messages.length)) {
+            setCurrentPage((prevState) => prevState - PAGE_SIZE);
+            console.count("loading");
+          }
+        }}
+        initialLoad={false}
+        threshold={0.4}
+        hasMore={currentPage > -Math.abs(messages.length)}
+        loader={
+          <Box>
+            <Spinner />
+          </Box>
+        }
+        useWindow={false}
+        isReverse
+      >
+        {messages.slice(currentPage).map((chat: MessageState, idx: number) => (
           <Flex
             color="gray.600"
             mb={3}
@@ -86,6 +110,7 @@ const Messages = () => {
             </Text>
           </Flex>
         ))}
+      </InfiniteScroll>
     </Box>
   );
 };
