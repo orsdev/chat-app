@@ -38,7 +38,7 @@ function PromptUser() {
       setInvalid(false);
       onCloseModal();
 
-      dispatch(saveUserName(value));
+      dispatch(saveUserName(value.toLowerCase()));
     }
   };
 
